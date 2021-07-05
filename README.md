@@ -1,1 +1,2 @@
-# databucket3-api-java-client
+# databucket-api-java-client
+Java API client for Databucket REST service with examples
