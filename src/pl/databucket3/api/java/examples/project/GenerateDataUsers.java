@@ -78,8 +78,6 @@ public class GenerateDataUsers {
             }
 
             csvReader.close();
-
-            System.out.println("Done.");
         }
         catch (Exception e) {
             e.printStackTrace();

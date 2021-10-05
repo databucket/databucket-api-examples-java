@@ -321,7 +321,7 @@ public class DatabucketExtension {
             throw new RuntimeException("Response status: " + response.getStatus() + "\n\n" + responseBody);
     }
 
-    public void createView(String name, String description, Integer columnsId, Integer filterId, List<Integer> classesIds, List<Integer> teamsIds, List<Integer> featuresIds) {
+    public void createView(String name, String description, Integer columnsId, Integer filterId, List<Integer> classesIds, Integer roleId, List<Integer> teamsIds, List<Integer> featuresIds) {
         String resource = "/api/views";
 
         Map<String, Object> json = new HashMap<>();
@@ -333,6 +333,8 @@ public class DatabucketExtension {
             json.put("filterId", filterId);
         if (classesIds != null)
             json.put("classesIds", classesIds);
+        if (roleId != null)
+            json.put("roleId", roleId);
         if (teamsIds != null)
             json.put("teamsIds", teamsIds);
         if (featuresIds != null)

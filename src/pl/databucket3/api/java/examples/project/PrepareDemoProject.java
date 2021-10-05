@@ -6,24 +6,23 @@ import pl.databucket3.api.java.client.Databucket;
 
 import java.util.*;
 
-public class PrepareExampleProject {
+public class PrepareDemoProject {
     private final String url = "http://localhost:8080";
     private final boolean logs = true;
     private final String username = "super";
     private final String password = "super";
-    private final int projectId = 17;
+    private final int MEMBER_ROLE = 3;
+
+    private final int projectId = 18;
 
     Databucket databucket = new Databucket(url, username, password, projectId, logs);
 
     public static void main(String[] args) {
-        new PrepareExampleProject().run();
+        new PrepareDemoProject().run();
     }
 
     private void run() {
         databucket.initiateExtension();
-
-        prepareTeams();
-        List<Map<String, Object>> teams = databucket.extension.getTeams();
 
         prepareEnums();
         List<Map<String, Object>> enums = databucket.extension.getEnums();
@@ -31,10 +30,10 @@ public class PrepareExampleProject {
         prepareClasses(enums);
         List<Map<String, Object>> classes = databucket.extension.getClasses();
 
-        prepareGroups(teams);
+        prepareGroups();
         List<Map<String, Object>> groups = databucket.extension.getGroups();
 
-        prepareBuckets(teams, classes, groups);
+        prepareBuckets(classes, groups);
         List<Map<String, Object>> buckets = databucket.extension.getBuckets();
 
         prepareTags(classes);
@@ -61,18 +60,18 @@ public class PrepareExampleProject {
         prepareFilterJobsMoney(classes, tags);
         List<Map<String, Object>> filters = databucket.extension.getFilters();
 
-        prepareViewAllUser(classes, columns, teams);
-        prepareViewActiveUser(classes, columns, filters, teams);
-        prepareViewTrashUser(classes, columns, filters, teams);
-        prepareViewDeletedUser(classes, columns, filters, teams);
-        prepareViewScheduledUser(classes, columns, filters, teams);
-        prepareViewAnalysisUser(classes, columns, filters, teams);
-        prepareViewAll(classes, columns, filters, teams);
-        prepareViewTodo(classes, columns, filters, teams);
-        prepareViewDone(classes, columns, filters, teams);
-        prepareViewConfiguration(classes, columns, filters, teams);
-        prepareViewJobBase(classes, columns, filters, teams);
-        prepareViewJobMoney(classes, columns, filters, teams);
+        prepareViewAllUser(classes, columns);
+        prepareViewActiveUser(classes, columns, filters);
+        prepareViewTrashUser(classes, columns, filters);
+        prepareViewDeletedUser(classes, columns, filters);
+        prepareViewScheduledUser(classes, columns, filters);
+        prepareViewAnalysisUser(classes, columns, filters);
+        prepareViewAll(classes, columns, filters);
+        prepareViewTodo(classes, columns, filters);
+        prepareViewDone(classes, columns, filters);
+        prepareViewConfiguration(classes, columns, filters);
+        prepareViewJobBase(classes, columns, filters);
+        prepareViewJobMoney(classes, columns, filters);
 
         prepareTaskTrashActiveOrScheduled(classes, filters, tags);
         prepareTaskTrashNotTrashAndDeleted(classes, filters, tags);
@@ -147,158 +146,158 @@ public class PrepareExampleProject {
         );
     }
 
-    private void prepareViewAllUser(List<Map<String, Object>> classes, List<Map<String, Object>> columns, List<Map<String, Object>> teams) {
+    private void prepareViewAllUser(List<Map<String, Object>> classes, List<Map<String, Object>> columns) {
         databucket.extension.createView(
                 "- all -",
                 "All users",
                 getIdByName(columns, "user columns"),
                 null,
                 getIdsByNames(classes, Collections.singletonList("user")),
+                MEMBER_ROLE,
                 null,
-                getIdsByNames(teams, Arrays.asList("Team A", "Team B", "Team C")),
                 Arrays.asList(1,2,3,4,5,6,7,8,10)
         );
     }
 
-    private void prepareViewActiveUser(List<Map<String, Object>> classes, List<Map<String, Object>> columns, List<Map<String, Object>> filters, List<Map<String, Object>> teams) {
+    private void prepareViewActiveUser(List<Map<String, Object>> classes, List<Map<String, Object>> columns, List<Map<String, Object>> filters) {
         databucket.extension.createView(
                 "active",
                 "Active users",
                 getIdByName(columns, "user columns"),
                 getIdByName(filters, "tag is active"),
                 getIdsByNames(classes, Collections.singletonList("user")),
+                MEMBER_ROLE,
                 null,
-                getIdsByNames(teams, Arrays.asList("Team A", "Team B", "Team C")),
                 Arrays.asList(1,2,3,4,5,6,7,8,10)
         );
     }
 
-    private void prepareViewTrashUser(List<Map<String, Object>> classes, List<Map<String, Object>> columns, List<Map<String, Object>> filters, List<Map<String, Object>> teams) {
+    private void prepareViewTrashUser(List<Map<String, Object>> classes, List<Map<String, Object>> columns, List<Map<String, Object>> filters) {
         databucket.extension.createView(
                 "trash",
                 "Trashed users",
                 getIdByName(columns, "user columns"),
                 getIdByName(filters, "tag is trash"),
                 getIdsByNames(classes, Collections.singletonList("user")),
+                MEMBER_ROLE,
                 null,
-                getIdsByNames(teams, Arrays.asList("Team A", "Team B", "Team C")),
                 Arrays.asList(1,2,3,4,5,6,7,8,10)
         );
     }
 
-    private void prepareViewDeletedUser(List<Map<String, Object>> classes, List<Map<String, Object>> columns, List<Map<String, Object>> filters, List<Map<String, Object>> teams) {
+    private void prepareViewDeletedUser(List<Map<String, Object>> classes, List<Map<String, Object>> columns, List<Map<String, Object>> filters) {
         databucket.extension.createView(
                 "deleted",
                 "Deleted users",
                 getIdByName(columns, "user columns"),
                 getIdByName(filters, "tag is deleted"),
                 getIdsByNames(classes, Collections.singletonList("user")),
+                MEMBER_ROLE,
                 null,
-                getIdsByNames(teams, Arrays.asList("Team A", "Team B", "Team C")),
                 Arrays.asList(1,2,3,4,5,6,7,8,10)
         );
     }
 
-    private void prepareViewScheduledUser(List<Map<String, Object>> classes, List<Map<String, Object>> columns, List<Map<String, Object>> filters, List<Map<String, Object>> teams) {
+    private void prepareViewScheduledUser(List<Map<String, Object>> classes, List<Map<String, Object>> columns, List<Map<String, Object>> filters) {
         databucket.extension.createView(
                 "scheduled",
                 "Scheduled users",
                 getIdByName(columns, "user columns"),
                 getIdByName(filters, "tag is scheduled"),
                 getIdsByNames(classes, Collections.singletonList("user")),
+                MEMBER_ROLE,
                 null,
-                getIdsByNames(teams, Arrays.asList("Team A", "Team B", "Team C")),
                 Arrays.asList(1,2,3,4,5,6,7,8,10)
         );
     }
 
-    private void prepareViewAnalysisUser(List<Map<String, Object>> classes, List<Map<String, Object>> columns, List<Map<String, Object>> filters, List<Map<String, Object>> teams) {
+    private void prepareViewAnalysisUser(List<Map<String, Object>> classes, List<Map<String, Object>> columns, List<Map<String, Object>> filters) {
         databucket.extension.createView(
                 "analyzed",
                 "Analyzed users",
                 getIdByName(columns, "user columns"),
                 getIdByName(filters, "tag is analysis"),
                 getIdsByNames(classes, Collections.singletonList("user")),
+                MEMBER_ROLE,
                 null,
-                getIdsByNames(teams, Arrays.asList("Team A", "Team B", "Team C")),
                 Arrays.asList(1,2,3,4,5,6,7,8,10)
         );
     }
 
-    private void prepareViewAll(List<Map<String, Object>> classes, List<Map<String, Object>> columns, List<Map<String, Object>> filters, List<Map<String, Object>> teams) {
+    private void prepareViewAll(List<Map<String, Object>> classes, List<Map<String, Object>> columns, List<Map<String, Object>> filters) {
         databucket.extension.createView(
                 "- all -",
                 "Scenarios - all",
                 getIdByName(columns, "scheduler columns"),
                 null,
                 getIdsByNames(classes, Collections.singletonList("scheduler")),
+                MEMBER_ROLE,
                 null,
-                getIdsByNames(teams, Arrays.asList("Team A", "Team B", "Team C")),
                 Arrays.asList(1,2,3,4,5)
         );
     }
 
-    private void prepareViewTodo(List<Map<String, Object>> classes, List<Map<String, Object>> columns, List<Map<String, Object>> filters, List<Map<String, Object>> teams) {
+    private void prepareViewTodo(List<Map<String, Object>> classes, List<Map<String, Object>> columns, List<Map<String, Object>> filters) {
         databucket.extension.createView(
                 "todo",
                 "Scenarios - todo",
                 getIdByName(columns, "scheduler columns"),
                 getIdByName(filters, "tag is todo"),
                 getIdsByNames(classes, Collections.singletonList("scheduler")),
+                MEMBER_ROLE,
                 null,
-                getIdsByNames(teams, Arrays.asList("Team A", "Team B", "Team C")),
                 Arrays.asList(1,2,3,4,5)
         );
     }
 
-    private void prepareViewDone(List<Map<String, Object>> classes, List<Map<String, Object>> columns, List<Map<String, Object>> filters, List<Map<String, Object>> teams) {
+    private void prepareViewDone(List<Map<String, Object>> classes, List<Map<String, Object>> columns, List<Map<String, Object>> filters) {
         databucket.extension.createView(
                 "done",
                 "Scenarios - done",
                 getIdByName(columns, "scheduler columns"),
                 getIdByName(filters, "tag is done"),
                 getIdsByNames(classes, Collections.singletonList("scheduler")),
+                MEMBER_ROLE,
                 null,
-                getIdsByNames(teams, Arrays.asList("Team A", "Team B", "Team C")),
                 Arrays.asList(1,2,3,4,5)
         );
     }
 
-    private void prepareViewConfiguration(List<Map<String, Object>> classes, List<Map<String, Object>> columns, List<Map<String, Object>> filters, List<Map<String, Object>> teams) {
+    private void prepareViewConfiguration(List<Map<String, Object>> classes, List<Map<String, Object>> columns, List<Map<String, Object>> filters) {
         databucket.extension.createView(
                 "Configuration",
                 null,
                 getIdByName(columns, "config columns"),
                 null,
                 getIdsByNames(classes, Collections.singletonList("config")),
+                MEMBER_ROLE,
                 null,
-                getIdsByNames(teams, Arrays.asList("Team A", "Team B", "Team C")),
                 Arrays.asList(1,3,4)
         );
     }
 
-    private void prepareViewJobBase(List<Map<String, Object>> classes, List<Map<String, Object>> columns, List<Map<String, Object>> filters, List<Map<String, Object>> teams) {
+    private void prepareViewJobBase(List<Map<String, Object>> classes, List<Map<String, Object>> columns, List<Map<String, Object>> filters) {
         databucket.extension.createView(
                 "Base",
                 null,
                 getIdByName(columns, "jobs - base"),
                 getIdByName(filters, "jobs - base"),
                 getIdsByNames(classes, Collections.singletonList("job")),
+                MEMBER_ROLE,
                 null,
-                getIdsByNames(teams, Arrays.asList("Team A", "Team B", "Team C")),
                 Arrays.asList(1,2,3,4,5)
         );
     }
 
-    private void prepareViewJobMoney(List<Map<String, Object>> classes, List<Map<String, Object>> columns, List<Map<String, Object>> filters, List<Map<String, Object>> teams) {
+    private void prepareViewJobMoney(List<Map<String, Object>> classes, List<Map<String, Object>> columns, List<Map<String, Object>> filters) {
         databucket.extension.createView(
                 "Money",
                 null,
                 getIdByName(columns, "jobs - money"),
                 getIdByName(filters, "jobs - money"),
                 getIdsByNames(classes, Collections.singletonList("job")),
+                MEMBER_ROLE,
                 null,
-                getIdsByNames(teams, Arrays.asList("Team A", "Team B", "Team C")),
                 Arrays.asList(1,2,3,4,5)
         );
     }
@@ -881,7 +880,7 @@ public class PrepareExampleProject {
         databucket.extension.createTag("done", null, null, scheduledJobClassIds);
     }
 
-    private void prepareBuckets(List<Map<String, Object>> teams, List<Map<String, Object>> classes, List<Map<String, Object>> groups) {
+    private void prepareBuckets(List<Map<String, Object>> classes, List<Map<String, Object>> groups) {
         databucket.extension.createBucket(
                 "person",
                 "dev-users",
@@ -891,8 +890,8 @@ public class PrepareExampleProject {
                 getIdByName(classes, "user"),
                 getGroupsIds(groups, Collections.singletonList("DEV")),
                 null,
-                null,
-                getIdsByNames(teams, Arrays.asList("Team A", "Team B", "Team C"))
+                MEMBER_ROLE,
+                null
         );
 
         databucket.extension.createBucket(
@@ -904,8 +903,8 @@ public class PrepareExampleProject {
                 getIdByName(classes, "user"),
                 getGroupsIds(groups, Collections.singletonList("INT")),
                 null,
-                null,
-                getIdsByNames(teams, Arrays.asList("Team A", "Team B", "Team C"))
+                MEMBER_ROLE,
+                null
         );
 
         databucket.extension.createBucket(
@@ -917,8 +916,8 @@ public class PrepareExampleProject {
                 getIdByName(classes, "user"),
                 getGroupsIds(groups, Collections.singletonList("PRD")),
                 null,
-                null,
-                getIdsByNames(teams, Arrays.asList("Team A", "Team B", "Team C"))
+                MEMBER_ROLE,
+                null
         );
 
         databucket.extension.createBucket(
@@ -930,8 +929,8 @@ public class PrepareExampleProject {
                 getIdByName(classes, "scheduler"),
                 getGroupsIds(groups, Collections.singletonList("DEV")),
                 null,
-                null,
-                getIdsByNames(teams, Arrays.asList("Team A", "Team B", "Team C"))
+                MEMBER_ROLE,
+                null
         );
 
         databucket.extension.createBucket(
@@ -943,8 +942,8 @@ public class PrepareExampleProject {
                 getIdByName(classes, "scheduler"),
                 getGroupsIds(groups, Collections.singletonList("INT")),
                 null,
-                null,
-                getIdsByNames(teams, Arrays.asList("Team A", "Team B", "Team C"))
+                MEMBER_ROLE,
+                null
         );
 
         databucket.extension.createBucket(
@@ -956,8 +955,8 @@ public class PrepareExampleProject {
                 getIdByName(classes, "scheduler"),
                 getGroupsIds(groups, Collections.singletonList("PRD")),
                 null,
-                null,
-                getIdsByNames(teams, Arrays.asList("Team A", "Team B", "Team C"))
+                MEMBER_ROLE,
+                null
         );
 
         databucket.extension.createBucket(
@@ -969,8 +968,8 @@ public class PrepareExampleProject {
                 getIdByName(classes, "config"),
                 getGroupsIds(groups, Arrays.asList("DEV", "INT", "PRD")),
                 null,
-                null,
-                getIdsByNames(teams, Arrays.asList("Team A", "Team B", "Team C"))
+                MEMBER_ROLE,
+                null
         );
 
         databucket.extension.createBucket(
@@ -982,8 +981,8 @@ public class PrepareExampleProject {
                 getIdByName(classes, "job"),
                 getGroupsIds(groups, Collections.singletonList("DEV")),
                 null,
-                null,
-                getIdsByNames(teams, Arrays.asList("Team A", "Team B", "Team C"))
+                MEMBER_ROLE,
+                null
         );
 
         databucket.extension.createBucket(
@@ -995,16 +994,15 @@ public class PrepareExampleProject {
                 getIdByName(classes, "job"),
                 getGroupsIds(groups, Collections.singletonList("INT")),
                 null,
-                null,
-                getIdsByNames(teams, Arrays.asList("Team A", "Team B", "Team C"))
+                MEMBER_ROLE,
+                null
         );
     }
 
-    private void prepareGroups(List<Map<String, Object>> teams) {
-        List<Integer> teamsIds = getIdsByNames(teams, Arrays.asList("Team A", "Team B", "Team C"));
-        databucket.extension.createGroup("DEV", null, "Development environment zone", null, null, teamsIds);
-        databucket.extension.createGroup("INT", null, "Integration environment zone", null, null, teamsIds);
-        databucket.extension.createGroup("PRD", null, "Production environment zone", null, null, teamsIds);
+    private void prepareGroups() {
+        databucket.extension.createGroup("DEV", null, "Development environment zone", null, MEMBER_ROLE, null);
+        databucket.extension.createGroup("INT", null, "Integration environment zone", null, MEMBER_ROLE, null);
+        databucket.extension.createGroup("PRD", null, "Production environment zone", null, MEMBER_ROLE, null);
     }
 
     private void prepareClasses(List<Map<String, Object>> enums) {

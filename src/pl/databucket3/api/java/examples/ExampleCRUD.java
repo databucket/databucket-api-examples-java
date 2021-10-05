@@ -36,8 +36,6 @@ public class ExampleCRUD {
 		user.setProperty(User.PHONE, "0123-123-123");
 		user.setProperty(User.WEB, "https://www.trump.com");
 		user = bucket.insertData(user);
-
-		System.out.println(user);
 	}
 
 	private void modifyData() {
@@ -54,7 +52,6 @@ public class ExampleCRUD {
 		user.setProperty(User.COLOR, "blue");
 		user = bucket.updateData(user);
 
-		System.out.println(user);
 	}
 
 	private void deleteData() {

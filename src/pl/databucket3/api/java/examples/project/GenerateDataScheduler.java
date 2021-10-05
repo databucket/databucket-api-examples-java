@@ -60,7 +60,6 @@ public class GenerateDataScheduler {
 
     private String getRandomTag() {
         double rand = Math.random();
-        System.out.println(rand);
 
         if (rand < 0.6)
             return Tags.TODO;

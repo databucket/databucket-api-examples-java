@@ -131,10 +131,11 @@ public class Bucket {
 
         if (response.getStatus() == 200) {
             Map<String, Object> result = gson.fromJson(responseBody, Map.class);
-            if (result instanceof ArrayList) {
-                throw new RuntimeException("Expected one data set!");
-            } else
-                return castJsonToData(result);
+            List<Map<String, Object>> data = (List<Map<String, Object>>) result.get("data");
+            if (data.size() > 0)
+                return castJsonToData(data.get(0));
+            else
+                return null;
         } else
             throw new RuntimeException("Response status: " + response.getStatus());
     }
@@ -191,7 +192,8 @@ public class Bucket {
             id = ((Double) jsonObj.get(Field.ID)).longValue();
 
         if (jsonObj.containsKey(Field.TAG_ID))
-            tagId = ((Double) jsonObj.get(Field.TAG_ID)).intValue();
+            if (jsonObj.get(Field.TAG_ID) != null)
+                tagId = ((Double) jsonObj.get(Field.TAG_ID)).intValue();
 
         if (jsonObj.containsKey(Field.RESERVED))
             reserved = (Boolean) jsonObj.get(Field.RESERVED);
