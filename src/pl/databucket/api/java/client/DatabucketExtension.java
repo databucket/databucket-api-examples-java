@@ -146,7 +146,7 @@ public class DatabucketExtension {
             throw new RuntimeException("Response status: " + response.getStatus());
     }
 
-    public void createEnum(String name, String description, boolean iconsEnabled, List<Map<String, String>> items) {
+    public void createEnum(String name, String description, boolean iconsEnabled, List<Map<String, Object>> items) {
         String resource = "/api/enums";
 
         Map<String, Object> json = new HashMap<>();
@@ -214,11 +214,11 @@ public class DatabucketExtension {
     }
 
 
-    public void createBucket(String iconName, String name, String description, Boolean history, Boolean protectData, Integer classId, List<Integer> groupsIds, List<Integer> usersIds, Integer roleId, List<Integer> teamsIds) {
+    public void createBucket(Map<String, Object> icon, String name, String description, Boolean history, Boolean protectData, Integer classId, List<Integer> groupsIds, List<Integer> usersIds, Integer roleId, List<Integer> teamsIds) {
         String resource = "/api/buckets";
 
         Map<String, Object> json = new HashMap<>();
-        json.put("iconName", iconName);
+        json.put("icon", icon);
         json.put("name", name);
         if (description != null)
             json.put("description", description);

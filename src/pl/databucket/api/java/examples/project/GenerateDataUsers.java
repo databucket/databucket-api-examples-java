@@ -14,7 +14,7 @@ public class GenerateDataUsers {
     private final boolean logs = true;
     private final String username = "super";
     private final String password = "super";
-    private final int projectId = 1;
+    private final int projectId = 22;
     private Databucket databucket;
 
     public GenerateDataUsers() {
@@ -27,16 +27,16 @@ public class GenerateDataUsers {
 
     public static void main(String[] args) {
         GenerateDataUsers dataUsers = new GenerateDataUsers();
-//        dataUsers.importData("./resources/import/users.csv", Buckets.DEV_USERS);
-//        dataUsers.importData("./resources/import/users.csv", Buckets.INT_USERS);
-//        dataUsers.importData("./resources/import/users.csv", Buckets.PRD_USERS);
+        dataUsers.importData("./resources/users.csv", BucketName.DEV_USERS);
+        dataUsers.importData("./resources/users.csv", BucketName.INT_USERS);
+        dataUsers.importData("./resources/users.csv", BucketName.PRD_USERS);
         dataUsers.makeRandomChanges(BucketName.DEV_USERS);
     }
 
     public void generateDevIntPrdUsers() {
-        importData("./resources/import/users.csv", BucketName.DEV_USERS);
-        importData("./resources/import/users.csv", BucketName.INT_USERS);
-        importData("./resources/import/users.csv", BucketName.PRD_USERS);
+        importData("./resources/users.csv", BucketName.DEV_USERS);
+        importData("./resources/users.csv", BucketName.INT_USERS);
+        importData("./resources/users.csv", BucketName.PRD_USERS);
     }
 
     public void generateDevIntPrdUsersChanges() {

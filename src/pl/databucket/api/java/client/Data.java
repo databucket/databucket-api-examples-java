@@ -77,7 +77,7 @@ public class Data {
 	
 	public void deleteProperty(String propertyPath) {
 		if (this.properties != null) {
-			removeValueByPath(this.properties, propertyPath);
+			removeValueByPath(this.properties, propertyPath.replace("$.", ""));
 		}
 	}
 	
@@ -85,14 +85,14 @@ public class Data {
 		if (properties == null)
 			properties = new HashMap<String, Object>();
 		
-		setValueByPath(this.properties, propertyPath, value);
+		setValueByPath(this.properties, propertyPath.replace("$.", ""), value);
 	}
 	
 	public Object getProperty(String propertyPath) {
 		if (this.properties == null)
 			return null;
 		else
-			return getValueByPath(this.properties, propertyPath);
+			return getValueByPath(this.properties, propertyPath.replace("$.", ""));
 	}
 	
 	public Date getCreatedAt() {

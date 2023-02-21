@@ -7,13 +7,13 @@ import pl.databucket.api.java.client.Databucket;
 import java.util.*;
 
 public class PrepareDemoProject {
-    private final String url = "http://localhost:8080";
+//    private final String url = "http://localhost:8080";
+    private final String url = "https://databucket.pl/app";
     private final boolean logs = true;
-    private final String username = "super";
-    private final String password = "super";
+    private final String username = "username";
+    private final String password = "password";
     private final int MEMBER_ROLE = 3;
-
-    private final int projectId = 18;
+    private final int projectId = 4;
 
     Databucket databucket = new Databucket(url, username, password, projectId, logs);
 
@@ -882,7 +882,7 @@ public class PrepareDemoProject {
 
     private void prepareBuckets(List<Map<String, Object>> classes, List<Map<String, Object>> groups) {
         databucket.extension.createBucket(
-                "person",
+                Map.of("name", "person"),
                 "dev-users",
                 null,
                 true,
@@ -895,7 +895,7 @@ public class PrepareDemoProject {
         );
 
         databucket.extension.createBucket(
-                "person",
+                Map.of("name", "person"),
                 "int-users",
                 null,
                 true,
@@ -908,7 +908,7 @@ public class PrepareDemoProject {
         );
 
         databucket.extension.createBucket(
-                "person",
+                Map.of("name", "person"),
                 "prd-users",
                 null,
                 true,
@@ -921,7 +921,7 @@ public class PrepareDemoProject {
         );
 
         databucket.extension.createBucket(
-                "pending_actions",
+                Map.of("name", "pending_actions"),
                 "dev-scheduler",
                 null,
                 true,
@@ -934,7 +934,7 @@ public class PrepareDemoProject {
         );
 
         databucket.extension.createBucket(
-                "pending_actions",
+                Map.of("name", "pending_actions"),
                 "int-scheduler",
                 null,
                 true,
@@ -947,7 +947,7 @@ public class PrepareDemoProject {
         );
 
         databucket.extension.createBucket(
-                "pending_actions",
+                Map.of("name", "pending_actions"),
                 "prd-scheduler",
                 null,
                 true,
@@ -960,7 +960,7 @@ public class PrepareDemoProject {
         );
 
         databucket.extension.createBucket(
-                "settings_applications",
+                Map.of("name", "settings_applications"),
                 "config",
                 null,
                 true,
@@ -973,7 +973,7 @@ public class PrepareDemoProject {
         );
 
         databucket.extension.createBucket(
-                "fact_check",
+                Map.of("name", "fact_check"),
                 "dev-jobs",
                 null,
                 false,
@@ -986,7 +986,7 @@ public class PrepareDemoProject {
         );
 
         databucket.extension.createBucket(
-                "fact_check",
+                Map.of("name", "fact_check"),
                 "int-jobs",
                 null,
                 false,
@@ -1193,102 +1193,102 @@ public class PrepareDemoProject {
     }
 
     private void prepareEnums() {
-        List<Map<String, String>> colors = new ArrayList<>();
-        Map<String, String> blueColor = new HashMap<>();
+        List<Map<String, Object>> colors = new ArrayList<>();
+        Map<String, Object> blueColor = new HashMap<>();
         blueColor.put("value", "blue");
         blueColor.put("text", "Blue");
         colors.add(blueColor);
-        Map<String, String> blackColor = new HashMap<>();
+        Map<String, Object> blackColor = new HashMap<>();
         blackColor.put("value", "black");
         blackColor.put("text", "Black");
         colors.add(blackColor);
-        Map<String, String> greenColor = new HashMap<>();
+        Map<String, Object> greenColor = new HashMap<>();
         greenColor.put("value", "green");
         greenColor.put("text", "Green");
         colors.add(greenColor);
-        Map<String, String> greyColor = new HashMap<>();
+        Map<String, Object> greyColor = new HashMap<>();
         greyColor.put("value", "grey");
         greyColor.put("text", "Grey");
         colors.add(greyColor);
         databucket.extension.createEnum("Eye colors", "Most popular eye colors", false, colors);
 
-        List<Map<String, String>> height = new ArrayList<>();
-        Map<String, String> lessThan1m = new HashMap<>();
+        List<Map<String, Object>> height = new ArrayList<>();
+        Map<String, Object> lessThan1m = new HashMap<>();
         lessThan1m.put("value", "h<1m");
         lessThan1m.put("text", "Less than 1m");
         height.add(lessThan1m);
-        Map<String, String> between1m2m = new HashMap<>();
+        Map<String, Object> between1m2m = new HashMap<>();
         between1m2m.put("value", "1m<h<2m");
         between1m2m.put("text", "Between 1m and 2m");
         height.add(between1m2m);
-        Map<String, String> moreThan2m = new HashMap<>();
+        Map<String, Object> moreThan2m = new HashMap<>();
         moreThan2m.put("value", "h>2m");
         moreThan2m.put("text", "More than 2m");
         height.add(moreThan2m);
         databucket.extension.createEnum("Height", "Height ranges", false, height);
 
-        List<Map<String, String>> statuses = new ArrayList<>();
-        Map<String, String> passed = new HashMap<>();
+        List<Map<String, Object>> statuses = new ArrayList<>();
+        Map<String, Object> passed = new HashMap<>();
         passed.put("value", "passed");
         passed.put("text", "Passed");
-        passed.put("icon", "check_circle_outline");
+        passed.put("icon", Map.of("name", "check_circle_outline", "color", "#1dd041"));
         statuses.add(passed);
-        Map<String, String> warning = new HashMap<>();
+        Map<String, Object> warning = new HashMap<>();
         warning.put("value", "warning");
         warning.put("text", "Warning");
-        warning.put("icon", "report_gmailerrorred");
+        warning.put("icon", Map.of("name", "report_gmailerrorred", "color", "#f5c014"));
         statuses.add(warning);
-        Map<String, String> failed = new HashMap<>();
+        Map<String, Object> failed = new HashMap<>();
         failed.put("value", "failed");
         failed.put("text", "Failed");
-        failed.put("icon", "cancel");
+        failed.put("icon", Map.of("name", "cancel", "color", "#d11313"));
         statuses.add(failed);
         databucket.extension.createEnum("Status", null, true, statuses);
 
-        List<Map<String, String>> environments = new ArrayList<>();
-        Map<String, String> devDefault = new HashMap<>();
+        List<Map<String, Object>> environments = new ArrayList<>();
+        Map<String, Object> devDefault = new HashMap<>();
         devDefault.put("value", "default");
         devDefault.put("text", "default");
         environments.add(devDefault);
-        Map<String, String> devEnv = new HashMap<>();
+        Map<String, Object> devEnv = new HashMap<>();
         devEnv.put("value", "DEV");
         devEnv.put("text", "DEV");
         environments.add(devEnv);
-        Map<String, String> devINT = new HashMap<>();
+        Map<String, Object> devINT = new HashMap<>();
         devINT.put("value", "INT");
         devINT.put("text", "INT");
         environments.add(devINT);
-        Map<String, String> devPRD = new HashMap<>();
+        Map<String, Object> devPRD = new HashMap<>();
         devPRD.put("value", "PRD");
         devPRD.put("text", "PRD");
         environments.add(devPRD);
         databucket.extension.createEnum("Environment", "List of environments", false, environments);
 
-        List<Map<String, String>> baseJobs = new ArrayList<>();
-        Map<String, String> createNewUser = new HashMap<>();
+        List<Map<String, Object>> baseJobs = new ArrayList<>();
+        Map<String, Object> createNewUser = new HashMap<>();
         createNewUser.put("value", "base-create-new-user");
         createNewUser.put("text", "Create new user");
         baseJobs.add(createNewUser);
-        Map<String, String> removeAllCreditCards = new HashMap<>();
+        Map<String, Object> removeAllCreditCards = new HashMap<>();
         removeAllCreditCards.put("value", "base-remove-all-credit-cards");
         removeAllCreditCards.put("text", "Remove all credit cards");
         baseJobs.add(removeAllCreditCards);
-        Map<String, String> suspendUser = new HashMap<>();
+        Map<String, Object> suspendUser = new HashMap<>();
         suspendUser.put("value", "base-suspend-user");
         suspendUser.put("text", "Suspend user");
         baseJobs.add(suspendUser);
-        Map<String, String> reactivateUser = new HashMap<>();
+        Map<String, Object> reactivateUser = new HashMap<>();
         reactivateUser.put("value", "base-reactivate-user");
         reactivateUser.put("text", "Reactivate user");
         baseJobs.add(reactivateUser);
         databucket.extension.createEnum("Jobs - base", null, false, baseJobs);
 
-        List<Map<String, String>> moneyJobs = new ArrayList<>();
-        Map<String, String> increaseMoney = new HashMap<>();
+        List<Map<String, Object>> moneyJobs = new ArrayList<>();
+        Map<String, Object> increaseMoney = new HashMap<>();
         increaseMoney.put("value", "money-increase");
         increaseMoney.put("text", "Increase money");
         moneyJobs.add(increaseMoney);
-        Map<String, String> reduceMoney = new HashMap<>();
+        Map<String, Object> reduceMoney = new HashMap<>();
         reduceMoney.put("value", "money-reduce");
         reduceMoney.put("text", "Reduce money");
         moneyJobs.add(reduceMoney);

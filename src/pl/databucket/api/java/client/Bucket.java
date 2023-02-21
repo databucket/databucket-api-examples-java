@@ -15,7 +15,7 @@ import java.util.*;
 
 public class Bucket {
 
-    private final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS+00:00";
+    private final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     private Databucket databucket;
     private String name;
     private Gson gson;
