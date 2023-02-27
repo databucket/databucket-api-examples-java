@@ -11,7 +11,7 @@ public class PrepareExampleProject {
     private final boolean logs = true;
     private final String username = "super";
     private final String password = "super";
-    private final int projectId = 23;
+    private final int projectId = 1;
 
     Databucket databucket = new Databucket(url, username, password, projectId, logs);
 
@@ -1189,9 +1189,9 @@ public class PrepareExampleProject {
     }
 
     private void prepareTeams() {
-        databucket.extension.createTeam("Team A", null, Arrays.asList("super", "userSAMR", "userAMR", "userMR", "userR"));
-        databucket.extension.createTeam("Team B", null, Arrays.asList("userDisabled", "userExpired"));
-        databucket.extension.createTeam("Team C", null, Arrays.asList("userSAMR", "userAMR", "userMR"));
+        databucket.extension.createTeam("Team A", null, List.of(username));
+        databucket.extension.createTeam("Team B", null, List.of(username));
+        databucket.extension.createTeam("Team C", null, List.of(username));
     }
 
     private void prepareEnums() {
